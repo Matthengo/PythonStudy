@@ -1,0 +1,59 @@
+class Pessoa:
+    """Classe que representa uma pessoa"""
+    ano_atual = 2019
+ 
+    def __init__(self, nome, sobrenome, idade):
+        self.nome = nome
+        self.sobrenome = sobrenome
+        self.idade = idade
+ 
+    @classmethod
+    def por_ano_nascimento(cls, nome, sobrenome, ano_nascimento):
+        """
+        Cria uma pessoa por ano de nascimento
+ 
+        Nos @classmethods a própria classe Pessoa é passada para o argumento 
+        cls, nesse caso, tudo o que for alterado aqui será aplicado a nível de 
+        classe e pode afetar todos as instâncias da classe.
+ 
+        Podemos, inclusive, criar outros objetos da própria classe, já que ela
+        está no argumento cls.
+ 
+        Nesse exemplo, vou gerar uma nova pessoa por ano de nascimento e não 
+        por idade, como a classe pede.
+        """
+        idade = cls.ano_atual - ano_nascimento
+        return cls(nome=nome, sobrenome=sobrenome, idade=idade)
+ 
+    @staticmethod
+    def boas_vindas(mensagem):
+        """
+        Métodos estáticos são métodos simples que não têm nem a instância e nem
+        a classe como argumentos. São, basicamente, funções simples dentro da 
+        classe. Dentro do método estático não temos acesso nem a self 
+        (instância), nem cls (classe). Podemos acessar atributos de classe 
+        e métodos de classe usando o próprio nome da classe, mas nada referente 
+        à instância. Geralmente esses métodos fazem algo relacionado com a 
+        classe, por exemplo, gerar um ID, imprimir uma mensagem, validar um 
+        valor, mas não altera nada da instância em si.
+ 
+        Perceba que os métodos de classe não recebem nada no primeiro argumento 
+        você pode começar a adicionar seus argumentos sem self ou cls.
+        """
+        print(mensagem)
+ 
+ 
+# Instância normal
+pessoa1 = Pessoa(nome='Luiz', sobrenome='Miranda', idade=30)
+print(pessoa1.nome, pessoa1.sobrenome, pessoa1.idade)  # Luiz Miranda 30
+ 
+# Instância usando o método de classe
+pessoa2 = Pessoa.por_ano_nascimento(
+    nome='Luiz',
+    sobrenome='Miranda',
+    ano_nascimento=1989
+)
+print(pessoa2.nome, pessoa2.sobrenome, pessoa2.idade)  # Luiz Miranda 30
+ 
+# Método estático
+Pessoa.boas_vindas(mensagem='Bom dia!')  # Bom dia!
